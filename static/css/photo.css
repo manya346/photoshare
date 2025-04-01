@@ -1,0 +1,154 @@
+/* General Styling */
+.photo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0a192f, #112d4e);
+    padding: 20px;
+}
+
+.photo-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    width: 80%;
+    max-width: 600px;
+    transition: all 0.3s ease-in-out;
+}
+
+.photo-card:hover {
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+}
+
+.photo-display {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+/* Tags Styling */
+.photo-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.tag {
+    background: rgba(0, 170, 255, 0.2);
+    color: #00aaff;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+}
+
+/* Details Section */
+.photo-details {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.photo-title {
+    font-size: 24px;
+    color: #00aaff;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.photo-description {
+    font-size: 16px;
+    color: #b0c7d7;
+    margin-bottom: 10px;
+}
+
+.photo-meta {
+    font-size: 14px;
+    color: #8faec4;
+    margin-bottom: 20px;
+}
+
+/* Buttons */
+.photo-actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.btn {
+    padding: 8px 15px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+.back-btn {
+    background: #0077cc;
+    color: white;
+}
+
+.back-btn:hover {
+    background: #005fa3;
+}
+
+.edit-btn {
+    background: #ffa500;
+    color: white;
+}
+
+.edit-btn:hover {
+    background: #cc8400;
+}
+
+.delete-btn {
+    background: #ff3b30;
+    color: white;
+}
+
+.delete-btn:hover {
+    background: #cc2d24;
+}
+
+/* Navigation Buttons */
+.photo-nav {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.nav-btn {
+    background: #00aaff;
+    color: white;
+    font-size: 18px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+.nav-btn:hover {
+    background: #0077cc;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .photo-card {
+        width: 90%;
+    }
+
+    .photo-title {
+        font-size: 20px;
+    }
+
+    .btn {
+        font-size: 14px;
+        padding: 6px 12px;
+    }
+}

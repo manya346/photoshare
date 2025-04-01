@@ -1,5 +1,8 @@
 /.vscode
 /env
+/.venv
+/staticfiles
+
 
 */images/*
 !*/images/default.jpg

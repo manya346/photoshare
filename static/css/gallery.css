@@ -6,6 +6,13 @@
     flex-direction: column;
 }
 
+.banner h1{
+    font-size: 2rem;
+    color: white;
+    margin-top: 20px;
+    font-weight: bolder;
+}
+
 .search {
     display: flex;
     gap: 0.5rem;
@@ -15,12 +22,13 @@
     display: flex;
     height: 42px;
     width: 42vw;
-    background-color: black;
-    border-radius: 20px;
-    border: none;
     color: whitesmoke;
     align-items: center;
     margin-top: 10px;
+    background-color: #16213e;
+    border-radius: 30px;
+    border: 2px solid #fddb3a;
+    padding: 10px 15px;
 }
 
 .s-icon {
@@ -31,7 +39,7 @@
     text-justify: center;
     height: 90%;
     width: 80%;
-    background-color: black;
+    background-color: transparent;
     border: none;
     color: whitesmoke;
     font-size: large;

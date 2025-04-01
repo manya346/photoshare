@@ -1,84 +1,58 @@
 {% extends "base.html" %}
 {% load static %}
-{% block title %}Gallery{% endblock %}
+
+{% block title %}My Uploads{% endblock %}
+
 {% block style %}
-<style>
-    @import url('{% static "css/base.css" %}');
-    @import url('{% static "css/photo-grid.css" %}');
-    @import url('{% static "css/gallery.css" %}');
-</style>
+<link rel="stylesheet" href="{% static 'css/user_photos.css' %}">
 {% endblock %}
+
 {% block content %}
 <div class="container my-4">
     <section class="banner">
-        <h1>
-            Search image
-        </h1>  
-        <form class="search" method="GET">
-            <div class="col-8">
-                <label>
-                    <div class="search-bar">
-                        <svg class="s-icon" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
-                            width="50" height="50"
-                            viewBox="0 0 50 50"
-                            style=" fill:#fff;"><path d="M 21 3 C 11.621094 3 4 10.621094 4 20 C 4 29.378906 11.621094 37 21 37 C 24.710938 37 28.140625 35.804688 30.9375 33.78125 L 44.09375 46.90625 L 46.90625 44.09375 L 33.90625 31.0625 C 36.460938 28.085938 38 24.222656 38 20 C 38 10.621094 30.378906 3 21 3 Z M 21 5 C 29.296875 5 36 11.703125 36 20 C 36 28.296875 29.296875 35 21 35 C 12.703125 35 6 28.296875 6 20 C 6 11.703125 12.703125 5 21 5 Z"></path>
-                        </svg>
-                        <input type='text' class="search-box" name='tags' placeholder="Search Photo" value="{{search_input}}">
-                    </div>
-                </label>
-            </div>
-        </form>
+        <h1>My Uploaded Photos</h1>  
     </section>
 
-
-
-    {%if view.kwargs.username == user.username %}
-    <h1 class='mb-3'>My photos {{ utag }} ({{page_obj.paginator.count}})</h1>
-    {%else%}
-    <h1 class="mb-3">Photos by {{ view.kwargs.username }} {{ utag }} ({{ page_obj.paginator.count }})</h1>
-    {%endif%}
     <div class="photo-grid">
         {% for photo in photos %}
-            <a
-                href="{% url 'photo' photo.id %}"
-                class="card"
-                style="background-image:url('{{photo.image.url}}')"
-            ></a>
+            <div class="photo-card">
+                <a href="{% url 'photo' photo.id %}">
+                    <img src="{{ photo.image.url }}" alt="Photo">
+                </a>
+                <div class="photo-info">
+                    <p class="photo-tags">
+                        {% for tag in photo.tags.all %}
+                            <a href="{% url 'user-gallery' username=view.kwargs.username %}?tag={{ tag.slug }}" class="tag">
+                                #{{ tag.name }}
+                            </a>
+                        {% endfor %}
+                    </p>
+                    <p class="photo-date">{{ photo.date_posted|date:"F d, Y" }}</p>
+                </div>
+            </div>
         {% empty %}
-        <h3>No photos...</h3>
+            <h3 class="no-photos">No photos uploaded yet.</h3>
         {% endfor %}
     </div>
 
-
-
-
-
-
-    <div class="page" style="margin-top: 10px;">
-        {% if is_paginated %}
-
+    <div class="pagination">
         {% if page_obj.has_previous %}
-            <a class="btn btn-outline-success mb-4" href="?page=1">First</a>
-            <a class="btn btn-outline-success mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+            <a class="btn" href="?page=1">First</a>
+            <a class="btn" href="?page={{ page_obj.previous_page_number }}">Previous</a>
         {% endif %}
 
         {% for num in page_obj.paginator.page_range %}
             {% if page_obj.number == num %}
-            <a class="btn btn-success mb-4" href="?page={{ num }}">{{ num }}</a>
+                <span class="btn active">{{ num }}</span>
             {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-            <a class="btn btn-outline-success mb-4" href="?page={{ num }}">{{ num }}</a>
+                <a class="btn" href="?page={{ num }}">{{ num }}</a>
             {% endif %}
         {% endfor %}
 
         {% if page_obj.has_next %}
-            <a class="btn btn-outline-success mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
-            <a class="btn btn-outline-success mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
-        {% endif %}
-
+            <a class="btn" href="?page={{ page_obj.next_page_number }}">Next</a>
+            <a class="btn" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
         {% endif %}
     </div>
-      
 </div>
-
-
 {% endblock %}

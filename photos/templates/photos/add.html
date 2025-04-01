@@ -5,78 +5,333 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="icon"href="{% static 'favicon.ico' %}">
+    <title>Upload Form</title>
+    <link rel="icon" href="{% static 'favicon.ico' %}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'css/tagify.css' %}" />
-    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
+        * {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: #1a1a2e;
+            color: #ffffff;
+            line-height: 1.6;
+            font-size: 0.9rem;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        li {
+            list-style: none;
+        }
+        
+        button {
+            cursor: pointer;
+            border: none;
+            outline: none;
+        }
+        
         .card {
-            background: rgb(33 37 41);
+            background: #0f3460;
+            color: #e0e0e0;
+            box-shadow: rgba(3, 8, 20, 0.1) 0px 0.15rem 0.5rem, rgba(2, 8, 20, 0.1) 0px 0.075rem 0.175rem;
+            border-radius: 8px;
+            transition: all 500ms;
             border: none;
         }
-
-        .txt{
-            background: rgb(19, 19, 19);
-            color: aliceblue;
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 6px 15px rgba(255, 255, 255, 0.1);
         }
-        .txt:focus {
-            background: rgb(19, 19, 19);
-            color: aliceblue;
+        
+        .form-control, .txt {
+            background: #16213e;
+            color: #e0e0e0;
+            font-size: 0.9rem;
+            border: 1px solid #1e2f4d;
+            border-radius: 6px;
+        }
+        
+        .form-control:focus, .txt:focus {
+            background: #16213e;
+            color: #e0e0e0;
+            border-color: #fddb3a;
+            box-shadow: 0 0 0 0.2rem rgba(253, 219, 58, 0.25);
+        }
+        
+        .form-label {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #fddb3a;
+            margin-bottom: 0.4rem;
+        }
+        
+        .btn-primary {
+            background-color: #fddb3a;
+            border-color: #fddb3a;
+            font-size: 0.9rem;
+            border-radius: 6px;
+            font-weight: 500;
+            padding: 8px 16px;
+            transition: all 0.3s ease;
+            color: #1a1a2e;
+        }
+        
+        .btn-primary:hover {
+            background-color: #e5c62e;
+            border-color: #e5c62e;
+            transform: translateY(-2px);
+        }
+        
+        .btn-dark {
+            background-color: #16213e;
+            border-color: #16213e;
+            font-size: 0.9rem;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-dark:hover {
+            background-color: #1e2f4d;
+            transform: translateY(-2px);
+        }
+        
+        legend {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #fddb3a;
+            padding-bottom: 4px;
+            border-bottom: 1px solid #fddb3a;
+            width: auto;
+            display: inline-block;
+        }
+        
+        small {
+            font-size: 0.8rem;
+        }
+        
+        small.error {
+            color: #fddb3a;
+            font-weight: 500;
+        }
+        
+        /* Enhanced toggle switch */
+        .form-switch {
+            display: flex;
+            align-items: center;
+            padding-left: 0;
+        }
+        
+        .form-switch .form-check-input {
+            margin-left: 0;
+            height: 1.25rem;
+            width: 2.25rem;
+            background-color: #16213e;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .form-switch .form-check-input:checked {
+            background-color: #fddb3a;
+            border-color: #fddb3a;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e");
+        }
+        
+        .form-switch .form-check-label {
+            margin-left: 10px;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+        
+        /* File input styling */
+        .file-input-container {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            width: 100%;
+        }
+        
+        .custom-file-input {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+        
+        .file-input-label {
+            background-color: #16213e;
+            color: #e0e0e0;
+            padding: 8px 16px;
+            border-radius: 6px;
+            display: block;
+            text-align: center;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            border: 1px dashed #1e2f4d;
+        }
+        
+        .file-input-label:hover {
+            background-color: #1e2f4d;
+            border-color: #fddb3a;
+        }
+        
+        .file-name {
+            margin-top: 5px;
+            font-style: italic;
+            color: #adb5bd;
+            font-size: 0.8rem;
+            display: block;
+            text-align: center;
+        }
+        
+        /* Form group spacing */
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+        
+        /* Required indicator */
+        .required-indicator {
+            color: #fddb3a;
+            margin-left: 0.25rem;
+        }
+        
+        .text-muted {
+            font-size: 0.8rem;
+            color: #a0a0a0 !important;
+        }
+        
+        /* Tagify customization */
+        .tagify {
+            background: #16213e;
+            border: 1px solid #1e2f4d;
+        }
+        
+        .tagify__tag {
+            background: #1e2f4d;
+        }
+        
+        .tagify__tag__removeBtn {
+            color: #fddb3a;
+        }
+        
+        .tagify__tag__removeBtn:hover {
+            color: #f8d41d;
+            background: transparent;
+        }
+        
+        .tagify__input::before {
+            color: #a0a0a0;
         }
     </style>
 </head>
-<body class="m-4">
+<body class="py-4">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-5">
-                <a href="{% url 'gallery' %}" class="btn btn-dark my-3">Go Back</a>
-                <div class="card border-secondary">
+                <a href="{% url 'gallery' %}" class="btn btn-dark my-3">
+                    <i class="fas fa-arrow-left me-1"></i> Go Back
+                </a>
+                <div class="card p-4">
                     <form method="POST" action="" enctype="multipart/form-data">
-
                         {% csrf_token %}
-
-                        <div class="mb-3 m-3">
-                            <legend class="form-label ">Description</legend>
+                        
+                        <div class="form-group">
+                            <legend>Description</legend>
                             {{ form.description }}
-                        </div>
-
-                        <div class="mb-3 m-3">
-                            <label class="form-label">Upload image</label>
-                            {{form.image}}
-                            {% for err in form.image.errors %}
-                                <small style="color: red;">{{err}}</small>
-                            {% endfor %}
-                            
+                            <small class="text-muted">Share details about your photo</small>
                         </div>
                         
-                        <div class="mb-3 m-3">
-                            <label class="form-label">Tags <small style='color:red'>*required</small></label>
-                            {{form.tags}}
-                            {% for err in form.tags.errors %}
-                                <small style="color: red;">{{err}}</small>
+                        <div class="form-group">
+                            <label class="form-label">
+                                Upload Image
+                                <span class="required-indicator">*</span>
+                            </label>
+                            <div class="file-input-container">
+                                <label class="file-input-label py-3">
+                                    <i class="fas fa-cloud-upload-alt me-2"></i>
+                                    <span id="file-text">Drop your image here or click to browse</span>
+                                    <div class="custom-file-input">
+                                        {{ form.image }}
+                                    </div>
+                                </label>
+                            </div>
+                            <small id="file-name" class="file-name"></small>
+                            {% for err in form.image.errors %}
+                                <small class="error">{{ err }}</small>
                             {% endfor %}
                         </div>
-
-                        <div class="mb-3 m-3">
+                        
+                        <div class="form-group">
+                            <label class="form-label">
+                                Tags
+                                <span class="required-indicator">*</span>
+                            </label>
+                            {{ form.tags }}
+                            <small class="text-muted">Add keywords to help others find your photo</small>
+                            {% for err in form.tags.errors %}
+                                <small class="error">{{ err }}</small>
+                            {% endfor %}
+                        </div>
+                        
+                        <div class="form-group">
                             <div class="form-check form-switch">
-                                {{form.is_private}}
-                                <label for="flexSwitchCheckDefault" class="form-check-label">make private</label>
+                                {{ form.is_private }}
+                                <label for="{{ form.is_private.id_for_label }}" class="form-check-label">
+                                    <i class="fas fa-lock me-1"></i>Make Private
+                                </label>
+                                <small class="text-muted d-block ms-5">Only you will be able to see this photo</small>
                             </div>
                         </div>
-
-                        <button type="submit" class="btn btn-primary m-3 mb-3">Submit</button>
+                        
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="fas fa-upload me-1"></i>Upload Photo
+                        </button>
                     </form>
                 </div>
             </div>
         </div>
     </div>    
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="{% static 'js/jQuery.tagify.min.js' %}"></script>
     <script>
-        $('[name=tags]').tagify({delimiters: ","});
+        // Initialize tagify
+        $('[name=tags]').tagify({
+            delimiters: ",",
+            placeholder: "Add tags...",
+            maxTags: 10
+        });
+        
+        // Display file name when selected
+        document.querySelector('input[type="file"]').addEventListener('change', function(e) {
+            const fileName = e.target.files[0]?.name;
+            if (fileName) {
+                document.getElementById('file-text').textContent = 'File selected: Click to change';
+                document.getElementById('file-name').textContent = fileName;
+                document.querySelector('.file-input-label').style.borderColor = '#fddb3a';
+            } else {
+                document.getElementById('file-text').textContent = 'Drop your image here or click to browse';
+                document.getElementById('file-name').textContent = '';
+                document.querySelector('.file-input-label').style.borderColor = '#1e2f4d';
+            }
+        });
     </script>
 </body>
 </html>
